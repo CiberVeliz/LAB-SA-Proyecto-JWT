@@ -1,8 +1,8 @@
 version: "3.3"
 
 services:
-  webserver:
+  tokenserver:
     build: .
-    container_name: JWT
+    container_name: tokenserver
     ports:
-      - 80:80
+      - 8081:80
