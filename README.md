@@ -1,2 +1,2 @@
-# LAB-SA-Proyecto1-JWT
+# LAB-SA-Proyecto-JWT
 Servidor de Tokens - Proyecto 1 SA
