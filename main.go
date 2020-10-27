@@ -80,5 +80,5 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 
 
 func initial(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Servidor de tokens - GRUPO1")
+	fmt.Fprintf(w, "Servidor de tokens - GRUPO1 - Deploy")
 }
