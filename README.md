@@ -1,2 +1,9 @@
 # LAB-SA-Proyecto-JWT
-Servidor de Tokens - Proyecto 1 SA
+## Grupo #1
+
+##Instrucciones:
+Lo unico necesario para desplegar en container con el aplicativo funcional es ejecutar el siguiente comando:
+
+```
+docker-compose up -d
+```
