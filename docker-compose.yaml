@@ -6,3 +6,6 @@ services:
     container_name: tokenserver
     ports:
       - 8081:80
+    volumes: 
+      - ./app:/app
+    command: go run "/app/main.go"

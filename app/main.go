@@ -72,7 +72,7 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 	tokenString, _ := token.SignedString(key)
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 
 	var structToken = TokenStruct{tokenString}
 	json.NewEncoder(w).Encode(structToken)
