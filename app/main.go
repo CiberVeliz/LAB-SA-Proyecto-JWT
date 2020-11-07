@@ -58,6 +58,13 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	rows, err := db.Query("SELECT scopes FROM Users WHERE id=? AND secret=?", id, secret)
+	var scopes string
+
+	for rows.Next() {
+		err = rows.Scan(&scopes)
+	}
+
 	//* Se genera el token *//
 	token := jwt.New(jwt.GetSigningMethod("RS256"))
 	key, _ := jwt.ParseRSAPrivateKeyFromPEM(privateKey)
@@ -66,6 +73,7 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 	claims["id"] = id
 	claims["exp"] = time.Now().Unix() + 36000
 	claims["iss"] = "sa_g1"
+	claims["scope"] = strings.Split(scopes, ",")
 
 	token.Claims = claims
 	tokenString, _ := token.SignedString(key)
