@@ -58,7 +58,7 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rows, err := db.Query("SELECT scopes FROM Users WHERE id=? AND secret=?", id, secret)
+	rows, _ := db.Query("SELECT scopes FROM Users WHERE id=? AND secret=?", id, secret)
 	var scopes string
 
 	for rows.Next() {
