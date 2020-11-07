@@ -1,24 +1,24 @@
 package main
 
 import (
+	"database/sql"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strings"
-	"database/sql"
-	"io/ioutil"
-	"encoding/json"
 	"time"
-	_  "github.com/mattn/go-sqlite3"
+
 	jwt "github.com/dgrijalva/jwt-go"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type TokenStruct struct {
-	Token  string `json:"token"`
+	Token string `json:"token"`
 }
 
-
 var privateKey []byte
-  
+
 func init() {
 	privateKey, _ = ioutil.ReadFile("./keys/id_rsa")
 }
@@ -29,7 +29,6 @@ func main() {
 
 	http.ListenAndServe(":80", nil)
 }
-
 
 func getToken(w http.ResponseWriter, r *http.Request) {
 	var id = r.URL.Query().Get("id")
@@ -64,7 +63,7 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 	key, _ := jwt.ParseRSAPrivateKeyFromPEM(privateKey)
 
 	claims := make(jwt.MapClaims)
-	claims["id"] = "HI"
+	claims["id"] = id
 	claims["exp"] = time.Now().Unix() + 36000
 	claims["iss"] = "sa_g1"
 
@@ -77,7 +76,6 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 	var structToken = TokenStruct{tokenString}
 	json.NewEncoder(w).Encode(structToken)
 }
-
 
 func initial(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Servidor de tokens - GRUPO1 - Deploy Final")
