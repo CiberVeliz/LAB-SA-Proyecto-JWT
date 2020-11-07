@@ -73,7 +73,7 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 	claims["id"] = id
 	claims["exp"] = time.Now().Unix() + 36000
 	claims["iss"] = "sa_g1"
-	claims["scope"] = scopes
+	claims["scope"] = strings.Split(scopes, ",")
 
 	token.Claims = claims
 	tokenString, _ := token.SignedString(key)
