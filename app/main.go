@@ -48,8 +48,15 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var count int
-	err = db.QueryRow("SELECT COUNT(1) FROM Users WHERE id=? AND secret=?", id, secret).Scan(&count)
+	count := 0
+	rows, err := db.Query("SELECT scopes FROM Users WHERE id=? AND secret=?", id, secret)
+
+	var scopes string
+
+	for rows.Next() {
+		err = rows.Scan(&scopes)
+		count = count + 1
+	}
 
 	if count == 0 {
 		w.WriteHeader(http.StatusBadRequest)
@@ -66,6 +73,7 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 	claims["id"] = id
 	claims["exp"] = time.Now().Unix() + 36000
 	claims["iss"] = "sa_g1"
+	claims["scope"] = strings.Split(scopes, ",")
 
 	token.Claims = claims
 	tokenString, _ := token.SignedString(key)
