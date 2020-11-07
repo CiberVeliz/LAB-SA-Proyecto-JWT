@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strconv"
 	"strings"
 	"time"
 
@@ -59,8 +58,8 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	idx, _ := strconv.Atoi(id)
-	scopes := [5]string{"", "juegos.generar,juegos.simular", "usuarios.login,usuarios.jugadores.get,usuarios.jugadores.post,usuarios.jugadores.put", "torneos.partida.get", "dados.tirar"}
+	//idx, _ := strconv.Atoi(id)
+	//scopes := [5]string{"", "juegos.generar,juegos.simular", "usuarios.login,usuarios.jugadores.get,usuarios.jugadores.post,usuarios.jugadores.put", "torneos.partida.get", "dados.tirar"}
 
 	//* Se genera el token *//
 	token := jwt.New(jwt.GetSigningMethod("RS256"))
@@ -70,7 +69,7 @@ func getToken(w http.ResponseWriter, r *http.Request) {
 	claims["id"] = id
 	claims["exp"] = time.Now().Unix() + 36000
 	claims["iss"] = "sa_g1"
-	claims["scope"] = scopes[idx-1]
+	//claims["scope"] = strings.Split(scopes[idx-1], ",")
 
 	token.Claims = claims
 	tokenString, _ := token.SignedString(key)
